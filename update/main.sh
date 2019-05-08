@@ -11,9 +11,14 @@ function updateHostname() {
 
 function updateLanguage() {
 	logTip $FUNCNAME
-	echo LANG=\"zh_CN.utf8\" >>/etc/sysconfig/i18n
-	source /etc/sysconfig/i18n
-	logSuccess "Language has updated."
+	read -p "Are you a Chinese?[Y/N]: " isChinese
+	if [ $isChinese == 'Y' || $isChinese == 'y']; then
+		echo LANG=\"zh_CN.utf8\" >>/etc/sysconfig/i18n
+		source /etc/sysconfig/i18n
+		logSuccess "Language has updated."
+	else
+		logSuccess "Did not change."
+	fi
 }
 
 function updateDNS() {
@@ -34,7 +39,7 @@ function updateYumSource() {
 		yum clean all
 		yum makecache
 	else
-		echo "It is best to use the default yum source."
+		logSuccess "It is best to use the default yum source."
 	fi
 	logSuccess "YumSource has updated."
 }

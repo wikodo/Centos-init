@@ -35,7 +35,6 @@ function installVim() {
 	logSuccess "Vim has installed."
 }
 
-# FIX: wait update
 function installZsh() {
 	logTip $FUNCNAME
 	yum -y install zsh
@@ -55,7 +54,6 @@ function installNode() {
 		npm config set puppeteer_download_host https://npm.taobao.org/mirrors
 	fi
 	logSuccess "Node has installed."
-
 }
 
 function installNpmPackages() {

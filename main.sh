@@ -10,16 +10,14 @@
 set -o nounset
 
 function main(){
-	source ./download.sh
-  source ./welcome.sh
-  source ./tool.sh
-  source ./check.sh
-  source ./init.sh
-  source ./install.sh
-  source ./config.sh
-  source ./secure.sh
-	# source ./user.sh
-  source ./end.sh
+  source ./slogan/welcome.sh
+  source ./utils/main.sh
+  source ./check/main.sh
+  source ./update/main.sh
+  source ./install/main.sh
+  source ./config/main.sh
+  source ./secure/main.sh
+  source ./slogan/end.sh
 }
 
 main

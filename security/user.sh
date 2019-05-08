@@ -63,11 +63,14 @@ function banRootLogin(){
 }
 
 function main(){
-	getUser
-	addUser
-	joinWheel
-	banRootLogin
-		cat <<EOF
+	read -p "Do you want to add a new user?[Y/N]: " wantAddNewUser
+	if [ $wantAddNewUser == 'Y' || $wantAddNewUser == 'y'];then
+		getUser
+		addUser
+		joinWheel
+		banRootLogin
+	fi
+	cat <<EOF
 +-------------------------------------------------+
 |               user is done                      |
 +-------------------------------------------------+
