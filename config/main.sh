@@ -4,7 +4,7 @@ function configZsh() {
 
 	sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="agnoster"/' ~/.zshrc
 
-	yum -y install autojump -y
+	yum -y install autojump
 	yum -y install autojump-zsh
 
 	# zsh-autosuggestions

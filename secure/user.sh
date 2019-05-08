@@ -64,7 +64,7 @@ function banRootLogin(){
 
 function main(){
 	read -p "Do you want to add a new user?[Y/N]: " wantAddNewUser
-	if [ $wantAddNewUser == 'Y' || $wantAddNewUser == 'y'];then
+	if (( wantAddNewUser == 'Y' || wantAddNewUser == 'y'));then
 		getUser
 		addUser
 		joinWheel

@@ -46,7 +46,7 @@ function updatePort() {
 	while true; do
 		read -p "Please enter ssh port number: " Port
 		if [ -n "$Port" ]; then
-			if (($Port > 65535 || $Port < 1024)); then
+			if ((Port > 65535 || Port < 1024)); then
 				break
 			else
 				echo "Ports can only be pure numbers within 1024-65535."
@@ -163,9 +163,9 @@ function preventCrackingPassword() {
 	logTip $FUNCNAME
 	while true; do
 		read -p "please input the softName that you want to use(fail2ban/DenyHosts/exit): " softName
-		if (($softName == "exit" || $softName != "fail2ban" || $softName != "DenyHosts")); then
+		if ((softName == "exit" || softName != "fail2ban" || softName != "DenyHosts")); then
 			echo 'Input is wrong, please input again.'
-		elif (($softName == "fail2ban")); then
+		elif ((softName == "fail2ban")); then
 			yum install -y fail2ban
 			cp -pf /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
 			cat >/etc/fail2ban/jail.local <<EOF

@@ -2,7 +2,7 @@
 
 function checkSupportOS() {
   logTip $FUNCNAME
-  if [ -z $(egrep -i 'CentOS|Red Hat' /etc/redhat-release) ]; then
+  if [[ -z $(egrep -i 'CentOS|Red Hat' /etc/redhat-release) ]]; then
     logFail 'Only support CentOS or Redhat system.'
     exit 1
   fi

@@ -48,7 +48,7 @@ function installNode() {
 	curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | zsh
 	source ~/.zshrc
 	nvm install stable
-	if (($inChina == "Y" || $inChina == "y")); then
+	if ((inChina == "Y" || inChina == "y")); then
 		npm config set registry https://registry.npm.taobao.org
 		npm config set disturl https://npm.taobao.org/dist
 		npm config set puppeteer_download_host https://npm.taobao.org/mirrors
