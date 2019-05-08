@@ -28,7 +28,7 @@ function setPrivileges() {
 function updatePort() {
 	logTip $FUNCNAME
 	cp /etc/ssh/sshd_config /etc/ssh/sshd.bak
-		while true; do
+	while true; do
 		read -p "Please enter ssh port number: " Port
 		if [ -n "$Port" ]; then
 			if ((Port <= 65535 && Port >= 1024)); then
@@ -98,9 +98,9 @@ function useKeyLogin() {
 	sed -i s/"PermitEmptyPasswords yes"/"PermitEmptyPasswords no"/g /etc/ssh/sshd_config
 	sed -i s/"UsePAM yes"/"UsePAM no"/g /etc/ssh/sshd_config
 	cat >>/etc/ssh/sshd_config <<EOF
-RSAAuthentication yes #RSA认证
-PubkeyAuthentication yes #开启公钥验证
-AuthorizedKeysFile ~/.ssh/authorized_keys #验证文件路径
+RSAAuthentication yes
+PubkeyAuthentication yes
+AuthorizedKeysFile ~/.ssh/authorized_keys
 EOF
 	service sshd restart
 	logSuccess "KeyLogin has set."
@@ -127,15 +127,15 @@ function configIptable() {
 		read -p "please input port number that you want to open , enter 0 for exit:" portNumber
 		if ((portNumber == 0)); then
 			break
+		elif ((portNumber <= 65535 && portNumber >= 1024)); then
+			iptables -A INPUT -p tcp --dport $portNumber -j ACCEPT
+		else
+			echo "Ports can only be pure numbers within 1024-65535."
 		fi
-		iptables -A INPUT -p tcp --dport $portNumber -j ACCEPT
 	done
-	#允许FTP服务的21和20端口
 	iptables -A INPUT -p tcp --dport 21 -j ACCEPT
 	iptables -A INPUT -p tcp --dport 20 -j ACCEPT
-	#允许ping
 	iptables -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
-	#禁止其他未允许的规则访问（注意：如果22端口未加入允许规则，SSH链接会直接断开。）
 	iptables -A INPUT -j REJECT
 	iptables -A FORWARD -j REJECT
 	service iptables save

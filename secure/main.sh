@@ -2,8 +2,8 @@
 function main() {
 	case $wantConfigSecurity in
 	Y | y)
-		source ./secure/secure.sh
-		source ./secure/user.sh
+		source $SCRIPT_PATH/secure/secure.sh
+		source $SCRIPT_PATH/secure/user.sh
 		;;
 	*) ;;
 	esac

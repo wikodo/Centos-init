@@ -147,7 +147,6 @@ source ~/.oh-my-zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 # Enable autosuggestions automatically.
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=10"
 EOF
-	source ~/.zshrc
 	logSuccess "Zsh has config."
 }
 function configVim() {
