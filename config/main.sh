@@ -87,6 +87,8 @@ alias -s go='vim'
 alias cat=ccat
 alias man=tldr
 eval "$(thefuck --alias)"
+# python
+alias pip=pip3.6
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 

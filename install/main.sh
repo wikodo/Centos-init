@@ -42,13 +42,11 @@ function installZsh() {
 
 function installNode() {
 	logTip $FUNCNAME
-	cd /usr
-	mkdir nodejs
-	cd nodejs
-	wget https://nodejs.org/dist/v12.2.0/node-v12.2.0-linux-x64.tar.xz
-	tar xf node-v12.2.0-linux-x64.tar.xz
-	ln -s /usr/nodejs/node-v12.2.0-linux-x64/bin/npm /usr/local/bin/
-	ln -s /usr/nodejs/node-v12.2.0-linux-x64/bin/node /usr/local/bin/
+	mkdir /usr/local/nodejs
+	wget -P /usr/local/nodejs https://nodejs.org/dist/v12.2.0/node-v12.2.0-linux-x64.tar.xz
+	tar xf /usr/local/nodejs/node-v12.2.0-linux-x64.tar.xz
+	ln -s /usr/local/nodejs/node-v12.2.0-linux-x64/bin/npm /usr/local/bin/
+	ln -s /usr/local/nodejs/node-v12.2.0-linux-x64/bin/node /usr/local/bin/
 	case $inChina in
 	Y | y)
 		npm config set registry https://registry.npm.taobao.org
@@ -74,14 +72,14 @@ function installPython() {
 	yum -y install python36u-pip
 	yum -y install python36u-devel
 	ln -s /usr/local/python3.6/bin/python3 /usr/bin/python3
-	pip install --upgrade pip
+	pip3.6 install --upgrade pip
 	logSuccess "Python has installed."
 
 }
 
 function installPipPackages() {
 	logTip $FUNCNAME
-	pip install thefuck
+	pip3.6 install thefuck
 	logSuccess "theFuck has installed."
 }
 
@@ -117,10 +115,7 @@ function installShadowSocks() {
 	logTip $FUNCNAME
 	wget --no-check-certificate -O shadowsocks.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh && chmod +x shadowsocks.sh && ./shadowsocks.sh 2>&1 | tee shadowsocks.log
 	/etc/init.d/shadowsocks restart
-	# 安装 BBR
 	wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh && chmod +x bbr.sh && ./bbr.sh
-	# 查看 BBR 是否安装成功
-	lsmod | grep bbr
 	logSuccess "shadowsocks has installed."
 }
 

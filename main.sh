@@ -9,16 +9,16 @@
 set -o nounset
 
 function main(){
-  source ./slogan/welcome.sh
-  source ./utils/main.sh
-  source ./check/main.sh
+  source $SCRIPT_PATH/slogan/welcome.sh
+  source $SCRIPT_PATH/utils/main.sh
+  source $SCRIPT_PATH/check/main.sh
 
-  source ./update/main.sh
-  source ./install/main.sh
-  source ./config/main.sh
-  source ./secure/main.sh
+  source $SCRIPT_PATH/update/main.sh
+  source $SCRIPT_PATH/install/main.sh
+  source $SCRIPT_PATH/config/main.sh
+  source $SCRIPT_PATH/secure/main.sh
 
-  source ./slogan/end.sh
+  source $SCRIPT_PATH/slogan/end.sh
 }
 
 main
