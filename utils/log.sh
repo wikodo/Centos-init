@@ -10,3 +10,9 @@ function logSuccess() {
 function logFail() {
   echo -e "\033[41;37m Fail: $1 \033[0m\\n"
 }
+
+function main(){
+	logSuccess 'Loaded the log file.'
+}
+
+main

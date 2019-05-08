@@ -163,10 +163,10 @@ function configIptable() {
 function preventCrackingPassword(){
   logTip $FUNCNAME
 	while true;do
-		read -p "please input the softName that you want to use(fail2ban/DenyHosts): " softName
-		if [$softName != 'fail2ban' || $softName != 'DenyHosts']; then
+		read -p "please input the softName that you want to use(fail2ban/DenyHosts/exit): " softName
+		if (($softName == "exit" || $softName != "fail2ban" || $softName != "DenyHosts")); then
 			echo 'Input is wrong, please input again.'
-		elif [$softName == 'fail2ban']; then
+		elif (($softName == "fail2ban")); then
 			yum install -y fail2ban
 			cp -pf /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
 			cat >/etc/fail2ban/jail.local <<EOF

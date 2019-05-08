@@ -1,7 +1,7 @@
 function updateHostname() {
 	logTip $FUNCNAME
 	read -p "Please input your hostname: " hostname
-	if [ "$OS_VERSION" -eq 7 ]; then
+	if (($OS_VERSION == 7)); then
 		hostnamectl --static set-hostname $hostname
 	else
 		echo -e "NETWORKING=yes\nHOSTNAME=$hostname" >/etc/sysconfig/network
@@ -12,7 +12,7 @@ function updateHostname() {
 function updateLanguage() {
 	logTip $FUNCNAME
 	read -p "Are you a Chinese?[Y/N]: " isChinese
-	if [ $isChinese == 'Y' || $isChinese == 'y']; then
+	if (($isChinese == "Y" || $isChinese == "y")); then
 		echo LANG=\"zh_CN.utf8\" >>/etc/sysconfig/i18n
 		source /etc/sysconfig/i18n
 		logSuccess "Language has updated."
@@ -32,7 +32,7 @@ EOF
 
 function updateYumSource() {
 	logTip $FUNCNAME
-	if [$inChina == "Y" || $inChina == "y"]; then
+	if (($inChina == "Y" || $inChina == "y")); then
 		mv -f /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 		wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-${OS_VERSION}.repo
 		wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-${OS_VERSION}.repo

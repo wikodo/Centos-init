@@ -10,6 +10,7 @@ function checkSupportOS() {
     logFail "Only support 64bit Operating System."
     exit 1
   fi
+	logSuccess "The operating system accords with a condition!"
 }
 function checkPrivilege() {
   logTip $FUNCNAME
@@ -17,6 +18,7 @@ function checkPrivilege() {
     logFail " Only root can run it. "
     exit 1
   fi
+	logSuccess "The user permissions accords with a condition!"
 }
 function checkNetwork() {
   logTip $FUNCNAME
@@ -25,6 +27,7 @@ function checkNetwork() {
     logFail "Network connection failed."
     exit 1
   fi
+	logSuccess "Network accords with a condition"
 }
 
 main() {
