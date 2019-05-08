@@ -1,7 +1,7 @@
 function updateHostname() {
 	logTip $FUNCNAME
 	read -p "Please input your hostname: " hostname
-	if ((OS_VERSION == 7)); then
+	if [ "$OS_VERSION" -eq 7 ]; then
 		hostnamectl --static set-hostname $hostname
 	else
 		echo -e "NETWORKING=yes\nHOSTNAME=$hostname" >/etc/sysconfig/network
@@ -12,13 +12,16 @@ function updateHostname() {
 function updateLanguage() {
 	logTip $FUNCNAME
 	read -p "Are you a Chinese?[Y/N]: " isChinese
-	if ((isChinese == "Y" || isChinese == "y")); then
+	case $isChinese in
+	Y | y)
 		echo LANG=\"zh_CN.utf8\" >>/etc/sysconfig/i18n
 		source /etc/sysconfig/i18n
 		logSuccess "Language has updated."
-	else
+		;;
+	*)
 		logSuccess "Did not change."
-	fi
+		;;
+	esac
 }
 
 function updateDNS() {
@@ -32,16 +35,19 @@ EOF
 
 function updateYumSource() {
 	logTip $FUNCNAME
-	if ((inChina == "Y" || inChina == "y")); then
+	case $inChina in
+	Y | y)
 		mv -f /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 		wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-${OS_VERSION}.repo
 		wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-${OS_VERSION}.repo
 		yum clean all
 		yum makecache
-	else
+		logSuccess "YumSource has updated."
+		;;
+	*)
 		logSuccess "It is best to use the default yum source."
-	fi
-	logSuccess "YumSource has updated."
+		;;
+	esac
 }
 
 function updateTime() {

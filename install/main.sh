@@ -48,11 +48,14 @@ function installNode() {
 	curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | zsh
 	source ~/.zshrc
 	nvm install stable
-	if ((inChina == "Y" || inChina == "y")); then
+	case $inChina in
+	Y | y)
 		npm config set registry https://registry.npm.taobao.org
 		npm config set disturl https://npm.taobao.org/dist
 		npm config set puppeteer_download_host https://npm.taobao.org/mirrors
-	fi
+		;;
+	*) ;;
+	esac
 	logSuccess "Node has installed."
 }
 
@@ -81,17 +84,17 @@ function installDocker() {
 	logTip $FUNCNAME
 	yum -y install docker
 	service docker start
-	  systemctl enable docker
+	systemctl enable docker
 	docker run hello-world
 	logSuccess "Docker has installed."
 }
 
 function installNginx() {
 	logTip $FUNCNAME
-	  rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
-	  yum install -y nginx
-	  systemctl start nginx.service
-	  systemctl enable nginx.service
+	rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+	yum install -y nginx
+	systemctl start nginx.service
+	systemctl enable nginx.service
 	logSuccess "Nginx has installed."
 }
 
@@ -99,8 +102,8 @@ function installCcat() {
 	logTip $FUNCNAME
 	wget https://github.com/jingweno/ccat/releases/download/v1.1.0/linux-amd64-1.1.0.tar.gz
 	tar -zxvf linux-amd64-1.1.0.tar.gz
-	  mv linux-amd64-1.1.0/ccat /usr/bin/ccat
-	  chmod +x /usr/bin/ccat
+	mv linux-amd64-1.1.0/ccat /usr/bin/ccat
+	chmod +x /usr/bin/ccat
 	rm -rf linux-amd64-1.1.0{,.tar.gz}
 	logSuccess "Ccat has installed."
 }

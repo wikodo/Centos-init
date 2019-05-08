@@ -46,7 +46,7 @@ function updatePort() {
 	while true; do
 		read -p "Please enter ssh port number: " Port
 		if [ -n "$Port" ]; then
-			if ((Port > 65535 || Port < 1024)); then
+			if ((Port <= 65535 && Port >= 1024)); then
 				break
 			else
 				echo "Ports can only be pure numbers within 1024-65535."
@@ -163,9 +163,8 @@ function preventCrackingPassword() {
 	logTip $FUNCNAME
 	while true; do
 		read -p "please input the softName that you want to use(fail2ban/DenyHosts/exit): " softName
-		if ((softName == "exit" || softName != "fail2ban" || softName != "DenyHosts")); then
-			echo 'Input is wrong, please input again.'
-		elif ((softName == "fail2ban")); then
+		case $softName in
+		fail2ban)
 			yum install -y fail2ban
 			cp -pf /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
 			cat >/etc/fail2ban/jail.local <<EOF
@@ -179,7 +178,8 @@ EOF
 			echo "enabled = trueport = $Port" >>/etc/fail2ban/jail.local
 			read -p "please input your email: " email
 			echo "action = iptables[name=SSH, port=$Port, protocol=tcp] sendmail-whois[name=SSH, dest=root, sender=$email]"
-		else
+			;;
+		DenyHosts)
 			yum -y install denyhosts
 			cat >/etc/denyhosts.conf <<EOF
 # 配置相关说明
@@ -211,7 +211,14 @@ EOF
 			echo "ADMIN_EMAIL = $email" >>/etc/denyhosts.conf
 			/etc/init.d/daemon-control start
 			systemctl enable daemon-control
-		fi
+			;;
+		exit)
+			break
+			;;
+		*)
+			echo 'Input is wrong, please input again.'
+			;;
+		esac
 	done
 	logSuccess "CrackingPassword has prevented."
 }
