@@ -41,9 +41,5 @@ logInfo 'shadowsocks config'
 Can I use this script to be a little handsome?
 Of course!
 
-## Uninstall
-Do not dream , I don't provide.
-You can see the source code to solve your problem.
-
 ## License
 The Script is released under the MIT license.

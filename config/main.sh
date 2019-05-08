@@ -14,7 +14,7 @@ function configZsh() {
 	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
 	# 配置.zshrc文件
-	sed -i 's/plugins=(git)/plugins=( git autojump zsh-autosuggestions zsh-syntax-highlighting z extract )/' ~/.zshrc
+	sed -i 's/plugins=.*/plugins=( git zsh-nvm autojump zsh-autosuggestions zsh-syntax-highlighting z extract )/g' ~/.zshrc
 	cat >>~/.zshrc <<EOF
 alias shadow='/etc/init.d/shadowsocks'
 alias vi='vim'

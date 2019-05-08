@@ -42,21 +42,9 @@ function installZsh() {
 
 function installNode() {
 	logTip $FUNCNAME
-	export NVM_DIR="$HOME/.nvm" && (
-  git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"
-  cd "$NVM_DIR"
-  git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
-) && \. "$NVM_DIR/nvm.sh"
-	cat >>~/.zshrc <<EOF
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-EOF
-	cat >>~/.bashrc <<EOF
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-EOF
+	git clone https://github.com/lukechilds/zsh-nvm ~/.oh-my-zsh/custom/plugins/zsh-nvm
+	sed -i 's/plugins=.*/plugins=( git zsh-nvm )/g' ~/.zshrc
 	source ~/.zshrc
-	source ~/.bashrc
 	nvm install stable
 	case $inChina in
 	Y | y)
