@@ -6,4 +6,5 @@ ULIMIT=$(ulimit -n)
 logSuccess ULIMIT=$ULIMIT
 
 read -p "Is your server in China? [Y/N]: " inChina
+read -p "Do you want to configure security measures? [Y/N]: " wantConfigSecurity
 

@@ -1,7 +1,12 @@
 #!/bin/bash
-function main(){
-	source ./secure/secure.sh
-	source ./secure/user.sh
+function main() {
+	case $wantConfigSecurity in
+	Y | y)
+		source ./secure/secure.sh
+		source ./secure/user.sh
+		;;
+	*) ;;
+	esac
 }
 
 main
