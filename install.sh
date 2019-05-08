@@ -1,7 +1,7 @@
 #!/bin/bash
 set -o nounset
 function main(){
-	version=1557316241
+	version=1557318367
 	echo "Install the latest version(${version}) of the script ..."
 	wget https://github.com/Tomotoes/Centos-init/archive/${version}.tar.gz
 	tar -zxvf ${version}.tar.gz

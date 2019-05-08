@@ -42,10 +42,13 @@ function installZsh() {
 
 function installNode() {
 	logTip $FUNCNAME
-	git clone https://github.com/lukechilds/zsh-nvm ~/.oh-my-zsh/custom/plugins/zsh-nvm
-	sed -i 's/plugins=.*/plugins=( git zsh-nvm )/g' ~/.zshrc
-	source ~/.zshrc
-	nvm install stable
+	cd /usr
+	mkdir nodejs
+	cd nodejs
+	wget https://nodejs.org/dist/v12.2.0/node-v12.2.0-linux-x64.tar.xz
+	tar xf node-v12.2.0-linux-x64.tar.xz
+	ln -s /usr/nodejs/node-v12.2.0-linux-x64/bin/npm /usr/local/bin/
+	ln -s /usr/nodejs/node-v12.2.0-linux-x64/bin/node /usr/local/bin/
 	case $inChina in
 	Y | y)
 		npm config set registry https://registry.npm.taobao.org
