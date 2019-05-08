@@ -7,6 +7,14 @@ wget http://tomotoes.com/Centos-init/install.sh && chmod +x install.sh && ./inst
 ```
 
 ## Functions
+```sh
+logInfo 'theFuck'
+logInfo 'alias'
+logInfo 'zsh'
+logInfo 'tldr->man'
+logInfo 'ccat->cat'
+logInfo 'shadowsocks config'
+```
 
 ## Screenshots
 

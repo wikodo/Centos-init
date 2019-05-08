@@ -39,7 +39,6 @@ function installZsh() {
 	logTip $FUNCNAME
 	yum -y install zsh
 	sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-	chsh -s /bin/zsh
 	logSuccess "Zsh has installed."
 }
 
@@ -60,7 +59,9 @@ function installNode() {
 }
 
 function installNpmPackages() {
+	logTip $FUNCNAME
 	npm install -g tldr pm2 nodemon
+	logSuccess "tldr pm2 nodemon have installed."
 }
 
 function installPython() {
@@ -77,7 +78,9 @@ function installPython() {
 }
 
 function installPipPackages() {
+	logTip $FUNCNAME
 	pip install thefuck
+	logSuccess "theFuck has installed."
 }
 
 function installDocker() {
@@ -132,7 +135,6 @@ function main() {
 	installNginx
 	installCcat
 	installShadowSocks
-
 	cat <<EOF
 +-------------------------------------------------+
 |               install is done                   |

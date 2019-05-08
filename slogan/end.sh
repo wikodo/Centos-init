@@ -14,7 +14,7 @@ function sayEnd() {
   case $REPLY in
   Y | y)
     echo "The system will reboot now ..."
-    shutdown -r now
+    reboot
     ;;
   N | n)
     echo "You must reboot later..."
