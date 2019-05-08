@@ -2,7 +2,7 @@
 # Description: The script can quickly initialize Centos.
 #--------------------------------------------------------------|
 #   @Program    : Centos-init.sh                               |
-#   @Version    : 1.0                                          |
+#   @Version    : 2.1                                          |
 #   @Author    : SimonMa   <simon@tomotoes.com>                |
 #   @Date       : 2019-05-07                                   |
 #--------------------------------------------------------------|

@@ -1,6 +1,6 @@
 #!/bin/bash
 function main() {
-	source ./log.sh
-	source ./variable.sh
+	source ./utils/log.sh
+	source ./utils/variable.sh
 }
 main
