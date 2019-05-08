@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # Description: The script can quickly initialize Centos.
 #--------------------------------------------------------------|
 #   @Program    : Centos-init.sh                               |

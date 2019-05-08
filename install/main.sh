@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 function installCommonSoft() {
 	logTip $FUNCNAME
 	yum -y install epel-release
@@ -67,7 +67,6 @@ function installPython() {
 	yum -y install python36u
 	yum -y install python36u-pip
 	yum -y install python36u-devel
-	mkdir -p ~/.pip
 	ln -s /usr/local/python3.6/bin/python3 /usr/bin/python3
 	pip install --upgrade pip
 	logSuccess "Python has installed."
@@ -85,7 +84,6 @@ function installDocker() {
 	sudo systemctl enable docker
 	docker run hello-world
 	logSuccess "Docker has installed."
-
 }
 
 function installNginx() {

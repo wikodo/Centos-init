@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 function deleteOrLockUnnecessaryUsersAndGroups() {
   logTip $FUNCNAME
   sudo userdel news
@@ -130,26 +130,30 @@ function configIptable() {
 	iptables -F
 	iptables -X
 	iptables -Z
-  cat >/etc/sysconfig/iptables <<EOF
-# Firewall configuration written by system-config-securitylevel
-# Manual customization of this file is not recommended.
-*filter
-:INPUT DROP [0:0]
-:FORWARD ACCEPT [0:0]
-:OUTPUT ACCEPT [0:0]
-:syn-flood - [0:0]
--A INPUT -i lo -j ACCEPT
--A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
--A INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT
--A INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
--A INPUT -p icmp -m limit --limit 100/sec --limit-burst 100 -j ACCEPT
--A INPUT -p icmp -m limit --limit 1/s --limit-burst 10 -j ACCEPT
--A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK SYN -j syn-flood
--A INPUT -j REJECT --reject-with icmp-host-prohibited
--A syn-flood -p tcp -m limit --limit 3/sec --limit-burst 6 -j RETURN
--A syn-flood -j REJECT --reject-with icmp-port-unreachable
-COMMIT
-EOF
+	# 允许本地回环接口(即运行本机访问本机)
+	iptables -A INPUT -i lo -j ACCEPT
+	# 允许已建立的或相关连的通行
+	iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+	#允许所有本机向外的访问
+	iptables -A OUTPUT -j ACCEPT
+	iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+	iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+	iptables -A INPUT -p tcp --dport $Port -j ACCEPT
+	while true; do
+		read -p "please input port number that you want to open , enter 0 for exit:" portNumber
+		if [$portNumber == 0]; then
+			break
+		fi
+		iptables -A INPUT -p tcp --dport $portNumber -j ACCEPT
+	done
+	#允许FTP服务的21和20端口
+	iptables -A INPUT -p tcp --dport 21 -j ACCEPT
+	iptables -A INPUT -p tcp --dport 20 -j ACCEPT
+	#允许ping
+	iptables -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
+	#禁止其他未允许的规则访问（注意：如果22端口未加入允许规则，SSH链接会直接断开。）
+	iptables -A INPUT -j REJECT
+	iptables -A FORWARD -j REJECT
 	service iptables save
 	systemctl enable iptables
   /sbin/service iptables restart
@@ -216,7 +220,7 @@ EOF
 function main() {
 	deleteOrLockUnnecessaryUsersAndGroups
 	setPrivileges
-	# configIptable
+	configIptable
 	updatePort
 	updateSSH
 	closeCtrlAltDel

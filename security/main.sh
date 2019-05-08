@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/bash/bin/env sh
 function main(){
 	source ./security.sh
 	source ./user.sh

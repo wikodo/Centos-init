@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 function sayTip() {
   # thefuck alias zsh vim tldr->man ccat->cat
 	# installed softs

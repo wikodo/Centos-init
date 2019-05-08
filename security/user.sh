@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 function getUser() {
   logTip $FUNCNAME
   while true; do

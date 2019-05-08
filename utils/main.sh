@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 function main() {
 	source ./log.sh
 	source ./variable.sh

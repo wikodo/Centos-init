@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 AUTHOR="SimonMa"
 EMAIl="simon@tomotoes.com"
