@@ -104,6 +104,18 @@ function installCcat() {
 	rm -rf linux-amd64-1.1.0{,.tar.gz}
 	logSuccess "Ccat has installed."
 }
+
+function installShadowSocks() {
+	logTip $FUNCNAME
+	wget --no-check-certificate -O shadowsocks.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh && chmod +x shadowsocks.sh && ./shadowsocks.sh 2>&1 | tee shadowsocks.log
+	/etc/init.d/shadowsocks restart
+	# 安装 BBR
+	wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh && chmod +x bbr.sh && ./bbr.sh
+	# 查看 BBR 是否安装成功
+	lsmod | grep bbr
+	logSuccess "shadowsocks has installed."
+}
+
 function main() {
 	installCommonSoft
 	installGit
@@ -116,6 +128,8 @@ function main() {
 	installDocker
 	installNginx
 	installCcat
+	installShadowSocks
+
 	cat <<EOF
 +-------------------------------------------------+
 |               install is done                   |

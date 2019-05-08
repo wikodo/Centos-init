@@ -1,7 +1,11 @@
 #!/bin/bash
 function sayTip() {
-  # thefuck alias zsh vim tldr->man ccat->cat
-	# installed softs
+	logInfo 'theFuck'
+	logInfo 'alias'
+	logInfo 'zsh'
+	logInfo 'tldr->man'
+	logInfo 'ccat->cat'
+	logInfo 'shadowsocks config'
 }
 function sayEnd() {
   logSuccess "Initialization of the system has been completed. "
