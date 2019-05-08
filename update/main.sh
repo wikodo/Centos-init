@@ -1,6 +1,5 @@
 function updateHostname() {
 	logTip $FUNCNAME
-	read -p "Please input your hostname: " hostname
 	if [ "$OS_VERSION" -eq 7 ]; then
 		hostnamectl --static set-hostname $hostname
 	else
@@ -11,7 +10,6 @@ function updateHostname() {
 
 function updateLanguage() {
 	logTip $FUNCNAME
-	read -p "Are you a Chinese?[Y/N]: " isChinese
 	case $isChinese in
 	Y | y)
 		echo LANG=\"zh_CN.utf8\" >>/etc/sysconfig/i18n

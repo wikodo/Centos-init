@@ -13,9 +13,7 @@ function installCommonSoft() {
 function installGit() {
 	logTip $FUNCNAME
 	yum -y install git
-	read -p "Please input your gitUserName: " gitUserName
 	git config --global user.name $gitUserName
-	read -p "Please input your gitUserEmail: " gitUserEmail
 	git config --global user.email $gitUserEmail
 	git config --global http.sslverify false
 	git config --global https.sslverify false

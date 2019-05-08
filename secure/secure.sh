@@ -43,7 +43,7 @@ function setPrivileges() {
 function updatePort() {
 	logTip $FUNCNAME
 	cp /etc/ssh/sshd_config /etc/ssh/sshd.bak
-	while true; do
+		while true; do
 		read -p "Please enter ssh port number: " Port
 		if [ -n "$Port" ]; then
 			if ((Port <= 65535 && Port >= 1024)); then
@@ -176,8 +176,8 @@ logpath = /var/log/secure
 maxretry = 3
 EOF
 			echo "enabled = trueport = $Port" >>/etc/fail2ban/jail.local
-			read -p "please input your email: " email
-			echo "action = iptables[name=SSH, port=$Port, protocol=tcp] sendmail-whois[name=SSH, dest=root, sender=$email]"
+			read -p "please input your email: " adminEmail
+			echo "action = iptables[name=SSH, port=$Port, protocol=tcp] sendmail-whois[name=SSH, dest=root, sender=$adminEmail]"
 			;;
 		DenyHosts)
 			yum -y install denyhosts
@@ -207,8 +207,8 @@ RESET_ON_SUCCESS = yes #如果一个ip登陆成功后，失败的登陆计数是
 DAEMON_LOG = /var/log/denyhosts #自己的日志文件
 DAEMON_SLEEP = 30s #当以后台方式运行时，每读一次日志文件的时间间隔。
 EOF
-			read -p "please input your email: " email
-			echo "ADMIN_EMAIL = $email" >>/etc/denyhosts.conf
+			read -p "please input your email: " adminEmail
+			echo "ADMIN_EMAIL = $adminEmail" >>/etc/denyhosts.conf
 			/etc/init.d/daemon-control start
 			systemctl enable daemon-control
 			;;
@@ -234,12 +234,6 @@ function main() {
 	closeSELinux
 	useKeyLogin
 	preventCrackingPassword
-	cat <<EOF
-+-------------------------------------------------+
-|               security is done                  |
-+-------------------------------------------------+
-EOF
-
 }
 
 main
