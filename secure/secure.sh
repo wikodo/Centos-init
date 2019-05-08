@@ -1,76 +1,76 @@
 #!/bin/bash
 function deleteOrLockUnnecessaryUsersAndGroups() {
-  logTip $FUNCNAME
-  sudo userdel news
-  sudo userdel uucp
-  sudo userdel games
-  sudo passwd -l dbus
-  sudo passwd -l vcsa
-  sudo passwd -l nobody
-  sudo passwd -l avahi
-  sudo passwd -l haldaemon
-  sudo passwd -l gopher
-  sudo passwd -l ftp
-  sudo passwd -l mailnull
-  sudo passwd -l pcap
-  sudo passwd -l mail
-  sudo passwd -l shutdown
-  sudo passwd -l halt
-  sudo passwd -l operator
-  sudo passwd -l sync
-  sudo passwd -l adm
-  sudo passwd -l lp
-  sudo groupdel adm
-  sudo groupdel lp
-  sudo groupdel news
-  sudo groupdel uucp
-  sudo groupdel games
-  sudo groupdel dip
-  sudo groupdel pppusers
-  logSuccess "UnnecessaryUsersAndGroups has locked/deleted."
+	logTip $FUNCNAME
+	userdel news
+	userdel uucp
+	userdel games
+	passwd -l dbus
+	passwd -l vcsa
+	passwd -l nobody
+	passwd -l avahi
+	passwd -l haldaemon
+	passwd -l gopher
+	passwd -l ftp
+	passwd -l mailnull
+	passwd -l pcap
+	passwd -l mail
+	passwd -l shutdown
+	passwd -l halt
+	passwd -l operator
+	passwd -l sync
+	passwd -l adm
+	passwd -l lp
+	groupdel adm
+	groupdel lp
+	groupdel news
+	groupdel uucp
+	groupdel games
+	groupdel dip
+	groupdel pppusers
+	logSuccess "UnnecessaryUsersAndGroups has locked/deleted."
 }
 
 function setPrivileges() {
-  logTip $FUNCNAME
-  sudo chattr +i /etc/passwd
-  sudo chattr +i /etc/shadow
-  sudo chattr +i /etc/group
-  sudo chattr +i /etc/gshadow
-  sudo chmod -R 700 /etc/rc.d/init.d/*
+	logTip $FUNCNAME
+	chattr +i /etc/passwd
+	chattr +i /etc/shadow
+	chattr +i /etc/group
+	chattr +i /etc/gshadow
+	chmod -R 700 /etc/rc.d/init.d/*
 	logSuccess "Privileges has set."
 }
 
 function updatePort() {
-  logTip $FUNCNAME
-  cp /etc/ssh/sshd_config /etc/ssh/sshd.bak
-  while true; do
-    read -p "Please enter ssh port number: " Port
-    if [ -n "$Port" ]; then
-      if [[ $Port=~ ^[0-9]+$ ]] && [ $Port -le 65535 ] && [ $Port -ge 1024 ]; then
-        break
-      else
-        echo "Ports can only be pure numbers within 1024-65535."
-      fi
-    else
-      Port="22"
-      break
-    fi
-  done
+	logTip $FUNCNAME
+	cp /etc/ssh/sshd_config /etc/ssh/sshd.bak
+	while true; do
+		read -p "Please enter ssh port number: " Port
+		if [ -n "$Port" ]; then
+			if (($Port > 65535 || $Port < 1024)); then
+				break
+			else
+				echo "Ports can only be pure numbers within 1024-65535."
+			fi
+		else
+			Port="22"
+			break
+		fi
+	done
 
-	echo "Port $Port" >> /etc/ssh/sshd_config
-  if [ "$OS_VERSION" -eq 7 ]; then
-		sudo firewall-cmd --zone=public --add-port=$Port/tcp --permanent
-  else
+	echo "Port $Port" >>/etc/ssh/sshd_config
+	if [ "$OS_VERSION" -eq 7 ]; then
+		firewall-cmd --zone=public --add-port=$Port/tcp --permanent
+	else
 		iptables -I INPUT -p tcp --dport $Port -j ACCEPT
-  fi
+	fi
 	logSuccess "Port has updated."
 }
 
-function updateSSH(){
-  logTip $FUNCNAME
- 	sed -i 's/#UseDNS yes/UseDNS no/g' /etc/ssh/sshd_config
-  sed -i 's/GSSAPIAuthentication yes/GSSAPIAuthentication no/' /etc/ssh/sshd_config
-  sed -i 's/X11Forwarding yes/X11Forwarding no/' /etc/ssh/sshd_config
+function updateSSH() {
+	logTip $FUNCNAME
+	sed -i 's/#UseDNS yes/UseDNS no/g' /etc/ssh/sshd_config
+	sed -i 's/GSSAPIAuthentication yes/GSSAPIAuthentication no/' /etc/ssh/sshd_config
+	sed -i 's/X11Forwarding yes/X11Forwarding no/' /etc/ssh/sshd_config
 	cat >>/etc/ssh/sshd_config <<EOF
 ChrootDirectory /home/%u
 AllowTcpForwarding no
@@ -78,55 +78,54 @@ EOF
 	logSuccess "SSH has updated."
 }
 
-
 function closeCtrlAltDel() {
-  logTip $FUNCNAME
-  sed -i "s/ca::ctrlaltdel:\/sbin\/shutdown -t3 -r now/#ca::ctrlaltdel:\/sbin\/shutdown -t3 -r now/" /etc/inittab
-  sed -i 's/^id:5:initdefault:/id:3:initdefault:/' /etc/inittab
+	logTip $FUNCNAME
+	sed -i "s/ca::ctrlaltdel:\/sbin\/shutdown -t3 -r now/#ca::ctrlaltdel:\/sbin\/shutdown -t3 -r now/" /etc/inittab
+	sed -i 's/^id:5:initdefault:/id:3:initdefault:/' /etc/inittab
 	logSuccess "CtrlAltDel has closed."
 }
 
 function closeIpv6() {
-  logTip $FUNCNAME
-  echo "net.ipv6.conf.all.disable_ipv6 = 1" >>/etc/sysctl.conf
-  echo "net.ipv6.conf.default.disable_ipv6 = 1" >>/etc/sysctl.conf
-  echo 1 >/proc/sys/net/ipv6/conf/all/disable_ipv6
-  echo 1 >/proc/sys/net/ipv6/conf/default/disable_ipv6
+	logTip $FUNCNAME
+	echo "net.ipv6.conf.all.disable_ipv6 = 1" >>/etc/sysctl.conf
+	echo "net.ipv6.conf.default.disable_ipv6 = 1" >>/etc/sysctl.conf
+	echo 1 >/proc/sys/net/ipv6/conf/all/disable_ipv6
+	echo 1 >/proc/sys/net/ipv6/conf/default/disable_ipv6
 	logSuccess "Ipv6 has closed."
 }
 
 function closeSELinux() {
-  logTip $FUNCNAME
-  sudo sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
-  setenforce 0
+	logTip $FUNCNAME
+	sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
+	setenforce 0
 	logSuccess "SELinux has closed."
 }
 
 function useKeyLogin() {
-  logTip $FUNCNAME
-  [ ! -d ~/.ssh ] && mkdir -p ~/.ssh/
-  chmod 700 ~/.ssh/
+	logTip $FUNCNAME
+	[ ! -d ~/.ssh ] && mkdir -p ~/.ssh/
+	chmod 700 ~/.ssh/
 	read -p "Please paste your public key: " publicKey
-  echo $publicKey >~/.ssh/authorized_keys
-	sudo chmod 600 ~/.ssh/authorized_keys
+	echo $publicKey >~/.ssh/authorized_keys
+	chmod 600 ~/.ssh/authorized_keys
 
-  sed -i s/"PasswordAuthentication yes"/"PasswordAuthentication no"/g /etc/ssh/sshd_config
-  sed -i s/"PermitEmptyPasswords yes"/"PermitEmptyPasswords no"/g /etc/ssh/sshd_config
-  sed -i s/"UsePAM yes"/"UsePAM no"/g /etc/ssh/sshd_config
+	sed -i s/"PasswordAuthentication yes"/"PasswordAuthentication no"/g /etc/ssh/sshd_config
+	sed -i s/"PermitEmptyPasswords yes"/"PermitEmptyPasswords no"/g /etc/ssh/sshd_config
+	sed -i s/"UsePAM yes"/"UsePAM no"/g /etc/ssh/sshd_config
 	cat >>/etc/ssh/sshd_config <<EOF
 RSAAuthentication yes #RSA认证
 PubkeyAuthentication yes #开启公钥验证
 AuthorizedKeysFile ~/.ssh/authorized_keys #验证文件路径
 EOF
-  service sshd restart
+	service sshd restart
 	logSuccess "KeyLogin has set."
 }
 
 function configIptable() {
-  logTip $FUNCNAME
-  systemctl stop firewalld.servic
-  systemctl disable firewalld.service
-  yum -y install iptables-services
+	logTip $FUNCNAME
+	systemctl stop firewalld.servic
+	systemctl disable firewalld.service
+	yum -y install iptables-services
 	iptables -F
 	iptables -X
 	iptables -Z
@@ -156,13 +155,13 @@ function configIptable() {
 	iptables -A FORWARD -j REJECT
 	service iptables save
 	systemctl enable iptables
-  /sbin/service iptables restart
+	/sbin/service iptables restart
 	logSuccess "iptable has config."
 }
 
-function preventCrackingPassword(){
-  logTip $FUNCNAME
-	while true;do
+function preventCrackingPassword() {
+	logTip $FUNCNAME
+	while true; do
 		read -p "please input the softName that you want to use(fail2ban/DenyHosts/exit): " softName
 		if (($softName == "exit" || $softName != "fail2ban" || $softName != "DenyHosts")); then
 			echo 'Input is wrong, please input again.'
@@ -177,9 +176,9 @@ filter = sshd
 logpath = /var/log/secure
 maxretry = 3
 EOF
-			echo "enabled = trueport = $Port" >> /etc/fail2ban/jail.local
+			echo "enabled = trueport = $Port" >>/etc/fail2ban/jail.local
 			read -p "please input your email: " email
-			echo  "action = iptables[name=SSH, port=$Port, protocol=tcp] sendmail-whois[name=SSH, dest=root, sender=$email]"
+			echo "action = iptables[name=SSH, port=$Port, protocol=tcp] sendmail-whois[name=SSH, dest=root, sender=$email]"
 		else
 			yum -y install denyhosts
 			cat >/etc/denyhosts.conf <<EOF
@@ -209,7 +208,7 @@ DAEMON_LOG = /var/log/denyhosts #自己的日志文件
 DAEMON_SLEEP = 30s #当以后台方式运行时，每读一次日志文件的时间间隔。
 EOF
 			read -p "please input your email: " email
-			echo "ADMIN_EMAIL = $email" >> /etc/denyhosts.conf
+			echo "ADMIN_EMAIL = $email" >>/etc/denyhosts.conf
 			/etc/init.d/daemon-control start
 			systemctl enable daemon-control
 		fi
@@ -228,7 +227,7 @@ function main() {
 	closeSELinux
 	useKeyLogin
 	preventCrackingPassword
-  cat <<EOF
+	cat <<EOF
 +-------------------------------------------------+
 |               security is done                  |
 +-------------------------------------------------+

@@ -81,17 +81,17 @@ function installDocker() {
 	logTip $FUNCNAME
 	yum -y install docker
 	service docker start
-	sudo systemctl enable docker
+	  systemctl enable docker
 	docker run hello-world
 	logSuccess "Docker has installed."
 }
 
 function installNginx() {
 	logTip $FUNCNAME
-	sudo rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
-	sudo yum install -y nginx
-	sudo systemctl start nginx.service
-	sudo systemctl enable nginx.service
+	  rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+	  yum install -y nginx
+	  systemctl start nginx.service
+	  systemctl enable nginx.service
 	logSuccess "Nginx has installed."
 }
 
@@ -99,8 +99,8 @@ function installCcat() {
 	logTip $FUNCNAME
 	wget https://github.com/jingweno/ccat/releases/download/v1.1.0/linux-amd64-1.1.0.tar.gz
 	tar -zxvf linux-amd64-1.1.0.tar.gz
-	sudo mv linux-amd64-1.1.0/ccat /usr/bin/ccat
-	sudo chmod +x /usr/bin/ccat
+	  mv linux-amd64-1.1.0/ccat /usr/bin/ccat
+	  chmod +x /usr/bin/ccat
 	rm -rf linux-amd64-1.1.0{,.tar.gz}
 	logSuccess "Ccat has installed."
 }
