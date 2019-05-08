@@ -1,11 +1,11 @@
 #!/bin/bash
 function sayTip() {
-	logInfo 'theFuck'
-	logInfo 'alias'
-	logInfo 'change default terminal to zsh'
-	logInfo 'tldr->man'
-	logInfo 'ccat->cat'
-	logInfo 'shadowsocks config'
+	logTip 'theFuck'
+	logTip 'alias'
+	logTip 'change default terminal to zsh'
+	logTip 'tldr->man'
+	logTip 'ccat->cat'
+	logTip 'shadowsocks config'
 }
 function sayEnd() {
   logSuccess "Initialization of the system has been completed. "

@@ -14,7 +14,7 @@ function configZsh() {
 	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
 	# 配置.zshrc文件
-	sed -i 's/plugins=.*/plugins=( git autojump zsh-autosuggestions zsh-syntax-highlighting z extract )/g' ~/.zshrc
+	sed -i 's/plugins=.*/plugins=( git autojump zsh-autosuggestions zsh-syntax-highlighting extract )/g' ~/.zshrc
 	cat >>~/.zshrc <<EOF
 alias shadow='/etc/init.d/shadowsocks'
 alias vi='vim'
@@ -33,28 +33,6 @@ alias shutdown='sudo /sbin/shutdown'
 
 # 自动创建父目录
 alias mkdir='mkdir -pv'
-
-# 解压任何文件
-extract() {
-    if [ -f $1 ] ; then
-      case $1 in
-        *.tar.bz2)   tar xjf $1     ;;
-        *.tar.gz)    tar xzf $1     ;;
-        *.bz2)       bunzip2 $1     ;;
-        *.rar)       unrar e $1     ;;
-        *.gz)        gunzip $1      ;;
-        *.tar)       tar xf $1      ;;
-        *.tbz2)      tar xjf $1     ;;
-        *.tgz)       tar xzf $1     ;;
-        *.zip)       unzip $1       ;;
-        *.Z)         uncompress $1  ;;
-        *.7z)        7z x $1        ;;
-        *)     echo "'$1' cannot be extracted via extract()" ;;
-         esac
-     else
-         echo "'$1' is not a valid file"
-     fi
-}
 
 # 查看文件/目录大小
 alias size='f(){ du -sh $1* | sort -hr; }; f'
@@ -136,13 +114,6 @@ y=$((($_COLUMNS - ${#_MESSAGE}) / 2))
 spaces=$(printf "%-${y}s" " ")
 echo -e "${spaces}${_MESSAGE}"
 echo " "
-
-# Load zsh-syntax-highlighting.
-source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-#
-# Load zsh-autosuggestions.
-source ~/.oh-my-zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-#
 
 # Enable autosuggestions automatically.
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=10"

@@ -42,11 +42,12 @@ function installZsh() {
 
 function installNode() {
 	logTip $FUNCNAME
-	mkdir /usr/local/nodejs
-	wget -P /usr/local/nodejs https://nodejs.org/dist/v12.2.0/node-v12.2.0-linux-x64.tar.xz
-	tar xf /usr/local/nodejs/node-v12.2.0-linux-x64.tar.xz
-	ln -s /usr/local/nodejs/node-v12.2.0-linux-x64/bin/npm /usr/local/bin/
-	ln -s /usr/local/nodejs/node-v12.2.0-linux-x64/bin/node /usr/local/bin/
+	NODEVERSION="node-v12.2.0-linux-x64"
+	wget -P /usr/local/ https://nodejs.org/dist/v12.2.0/${NODEVERSION}.tar.xz
+	xz -d ${NODEVERSION}.tar.xz
+	tar xvf ${NODEVERSION}.tar
+	ln -s /usr/local/${NODEVERSION}/bin/node /usr/local/bin/
+	ln -s /usr/local/${NODEVERSION}/bin/npm /usr/local/bin/
 	case $inChina in
 	Y | y)
 		npm config set registry https://registry.npm.taobao.org
@@ -60,6 +61,7 @@ function installNode() {
 
 function installNpmPackages() {
 	logTip $FUNCNAME
+	#WARN: Npm command reject.
 	npm install -g tldr pm2 nodemon
 	logSuccess "tldr pm2 nodemon have installed."
 }
