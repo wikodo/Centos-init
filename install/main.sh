@@ -36,14 +36,27 @@ function installVim() {
 function installZsh() {
 	logTip $FUNCNAME
 	yum -y install zsh
-	sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+	NO_INTERACTIVE=true sh -c "$(curl -fsSL https://raw.githubusercontent.com/subtlepseudonym/oh-my-zsh/feature/install-noninteractive/tools/install.sh)"
 	logSuccess "Zsh has installed."
 }
 
 function installNode() {
 	logTip $FUNCNAME
-	curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | zsh
+	export NVM_DIR="$HOME/.nvm" && (
+  git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"
+  cd "$NVM_DIR"
+  git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
+) && \. "$NVM_DIR/nvm.sh"
+	cat >>~/.zshrc <<EOF
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+EOF
+	cat >>~/.bashrc <<EOF
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+EOF
 	source ~/.zshrc
+	source ~/.bashrc
 	nvm install stable
 	case $inChina in
 	Y | y)

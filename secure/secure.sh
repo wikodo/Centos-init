@@ -1,18 +1,10 @@
 #!/bin/bash
 function deleteOrLockUnnecessaryUsersAndGroups() {
 	logTip $FUNCNAME
-	userdel news
-	userdel uucp
 	userdel games
 	passwd -l dbus
-	passwd -l vcsa
 	passwd -l nobody
-	passwd -l avahi
-	passwd -l haldaemon
-	passwd -l gopher
 	passwd -l ftp
-	passwd -l mailnull
-	passwd -l pcap
 	passwd -l mail
 	passwd -l shutdown
 	passwd -l halt
@@ -20,13 +12,6 @@ function deleteOrLockUnnecessaryUsersAndGroups() {
 	passwd -l sync
 	passwd -l adm
 	passwd -l lp
-	groupdel adm
-	groupdel lp
-	groupdel news
-	groupdel uucp
-	groupdel games
-	groupdel dip
-	groupdel pppusers
 	logSuccess "UnnecessaryUsersAndGroups has locked/deleted."
 }
 
@@ -140,7 +125,7 @@ function configIptable() {
 	iptables -A INPUT -p tcp --dport $Port -j ACCEPT
 	while true; do
 		read -p "please input port number that you want to open , enter 0 for exit:" portNumber
-		if [$portNumber == 0]; then
+		if ((portNumber == 0)); then
 			break
 		fi
 		iptables -A INPUT -p tcp --dport $portNumber -j ACCEPT
@@ -226,8 +211,8 @@ EOF
 function main() {
 	deleteOrLockUnnecessaryUsersAndGroups
 	setPrivileges
-	configIptable
 	updatePort
+	configIptable
 	updateSSH
 	closeCtrlAltDel
 	closeIpv6

@@ -2,7 +2,7 @@
 function sayTip() {
 	logInfo 'theFuck'
 	logInfo 'alias'
-	logInfo 'zsh'
+	logInfo 'change default terminal to zsh'
 	logInfo 'tldr->man'
 	logInfo 'ccat->cat'
 	logInfo 'shadowsocks config'

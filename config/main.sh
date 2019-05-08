@@ -155,7 +155,9 @@ function configVim() {
 }
 
 function main() {
-	configVim() configZsh() cat <<EOF
+	configVim
+	configZsh
+cat <<EOF
 +-------------------------------------------------+
 |               config is done                    |
 +-------------------------------------------------+
