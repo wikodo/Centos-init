@@ -6,8 +6,6 @@
 #   @Date       : 2019-05-07                                   |
 #--------------------------------------------------------------|
 
-set -o nounset
-
 function main(){
   source $SCRIPT_PATH/slogan/welcome.sh
   source $SCRIPT_PATH/utils/main.sh

@@ -1,10 +1,10 @@
 function updateHostname() {
 	logTip $FUNCNAME
 	read -p "Please input your hostname , enter means skip: " hostname
-	if [ -z $hostname ]; then
+	if [[ -z $hostname ]]; then
 		return
 	fi
-	if [ "$OS_VERSION" -eq 7 ]; then
+	if [[ "$OS_VERSION" -eq 7 ]]; then
 		hostnamectl --static set-hostname $hostname
 	else
 		echo -e "NETWORKING=yes\nHOSTNAME=$hostname" >/etc/sysconfig/network
