@@ -30,6 +30,7 @@ function sayEnd() {
 function main() {
   sayTip
   sayEnd
+	exit 0
 }
 
 main

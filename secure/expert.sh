@@ -1,3 +1,29 @@
+function updateSSHPort() {
+	logTip $FUNCNAME
+	cp /etc/ssh/sshd_config /etc/ssh/sshd.bak
+	while true; do
+		read -p "Please enter ssh port number: " Port
+		if [[ -n "$Port" ]]; then
+			if ((Port <= 65535 && Port >= 1024)); then
+				break
+			else
+				echo "Ports can only be pure numbers within 1024-65535."
+			fi
+		else
+			Port="22"
+			break
+		fi
+	done
+
+	echo "Port $Port" >>/etc/ssh/sshd_config
+	if [[ "$OS_VERSION" -eq 7 ]]; then
+		firewall-cmd --zone=public --add-port=$Port/tcp --permanent
+	else
+		iptables -I INPUT -p tcp --dport $Port -j ACCEPT
+	fi
+	logSuccess "Port has updated."
+}
+
 function useKeyLogin() {
 	logTip $FUNCNAME
 	[ ! -d ~/.ssh ] && mkdir -p ~/.ssh/
@@ -121,21 +147,24 @@ EOF
 }
 
 function main() {
+	read -p "Do you want to update ssh port? [Y/N]: " wantUpdateSSHPort
+	if [[ $wantUpdateSSHPort == "Y" || $wantUpdateSSHPort == "y" ]]; then
+		updateSSHPort
+	fi
+
 	read -p "Do you want to use key login? [Y/N]: " wantUseKeyLogin
-	case $wantUseKeyLogin in
-	Y | y) useKeyLogin ;;
-	*) ;;
-	esac
+	if [[ $wantUseKeyLogin == "Y" || $wantUseKeyLogin == "y" ]]; then
+		useKeyLogin
+	fi
+
 	read -p "Do you want to use iptable? [Y/N]: " wantUseIptable
-	case $wantUseIptable in
-	Y | y) useIptable ;;
-	*) ;;
-	esac
+	if [[ $wantUseIptable == "Y" || $wantUseIptable == "y" ]]; then
+		useIptable
+	fi
 	read -p "Do you want to use soft to prevent cracking password? [Y/N]: " wantPreventCrackingPassword
-	case $wantPreventCrackingPassword in
-	Y | y) preventCrackingPassword ;;
-	*) ;;
-	esac
+	if [[ $wantPreventCrackingPassword == "Y" || $wantPreventCrackingPassword == "y" ]]; then
+		preventCrackingPassword
+	fi
 }
 
 main

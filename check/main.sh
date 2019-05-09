@@ -6,7 +6,7 @@ function checkSupportOS() {
     logFail 'Only support CentOS or Redhat system.'
     exit 1
   fi
-  if [ $(uname -i) != "x86_64" ]; then
+  if [[ $(uname -i) != "x86_64" ]]; then
     logFail "Only support 64bit Operating System."
     exit 1
   fi
@@ -14,7 +14,7 @@ function checkSupportOS() {
 }
 function checkPrivilege() {
   logTip $FUNCNAME
-  if [ $(whoami) != "root" ]; then
+  if [[ $(whoami) != "root" ]]; then
     logFail " Only root can run it. "
     exit 1
   fi
@@ -23,14 +23,14 @@ function checkPrivilege() {
 function checkNetwork() {
   logTip $FUNCNAME
   ping www.baidu.com -c 2 &>/dev/null
-  if [ $? -ne 0 ]; then
+  if [[ $? -ne 0 ]]; then
     logFail "Network connection failed."
     exit 1
   fi
 	logSuccess "Network accords with a condition"
 }
 
-main() {
+function main() {
   checkSupportOS
   checkPrivilege
   checkNetwork

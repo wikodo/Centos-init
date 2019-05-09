@@ -5,8 +5,8 @@ logSuccess OS_VERSION=$OS_VERSION
 ULIMIT=$(ulimit -n)
 logSuccess ULIMIT=$ULIMIT
 
-read -p "Are you a Chinese?[Y/N]: " isChinese
-read -p "Is your server in China? [Y/N]: " inChina
-read -p "Please input your hostname: " hostname
-read -p "Please input your gitUserName: " gitUserName
-read -p "Please input your gitUserEmail: " gitUserEmail
+read -p "Do you want to use interactive mode?[Y/N]: " INTERACTIVE
+
+if [[ $INTERACTIVE == "Y" || $INTERACTIVE == "y" ]]; then
+	INTERACTIVE="Y"
+fi
