@@ -1,7 +1,7 @@
 #!/bin/bash
 function main(){
 	version=1557384121
-	version=1557385392
+	version=1557389341
 	wget https://github.com/Tomotoes/Centos-init/archive/${version}.tar.gz
 	tar -zxvf ${version}.tar.gz
 	rm -rf ${version}.tar.gz

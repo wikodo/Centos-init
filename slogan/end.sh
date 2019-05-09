@@ -14,7 +14,7 @@ function removeDownloadDirectory(){
 
 function sayEnd() {
 	logSuccess "Initialization of the system has been completed. "
-	echo -e "Do you want to \e[0;31m\033[1mreboot\e[m system now? [Y/N]:\t "
+	echo -e "Do you want to \e[0;31m\033[1mreboot\e[m system now? [Y/N]: "
 	read REPLY
 	case $REPLY in
 	Y | y)

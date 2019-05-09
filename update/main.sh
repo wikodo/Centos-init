@@ -14,8 +14,8 @@ function updateHostname() {
 
 function updateLanguage() {
 	logTip $FUNCNAME
-	read -p "Do you want to configure Chinese for your server?[Y/N]: " wantConfigChinese
-	if [[ $wantConfigChinese == "Y" || $wantConfigChinese == "y" ]]; then
+	read -p "Do you want to configure Chinese for your server? [N/n for rejection]: " wantConfigChinese
+	if [[ $wantConfigChinese != "N" && $wantConfigChinese != "n" ]]; then
 		echo LANG=\"zh_CN.utf8\" >>/etc/sysconfig/i18n
 		source /etc/sysconfig/i18n
 		logSuccess "Language has updated."
@@ -27,7 +27,7 @@ function updateLanguage() {
 function updateDNS() {
 	logTip $FUNCNAME
 	if [[ $INTERACTIVE == "Y" ]]; then
-		read -p "Do you wan update DNS to [8.8.8.8,114,114,114,114]?[Y/N]: " wantUpdateDNS
+		read -p "Do you wan update DNS to [8.8.8.8,114,114,114,114]? [N/n for rejection]: " wantUpdateDNS
 	fi
 	if [[ $wantUpdateDNS == "N" || $wantUpdateDNS == "n" ]]; then
 		return
@@ -41,8 +41,8 @@ EOF
 
 function updateYumSource() {
 	logTip $FUNCNAME
-	read -p "Is your server in China? [Y/N]: " inChina
-	if [[ $inChina == "Y" || $inChina == "y" ]]; then
+	read -p "Is your server in China? [N/n for in China]: " inChina
+	if [[ $inChina == "N" || $inChina == "n" ]]; then
 		mv -f /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 		wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-${OS_VERSION}.repo
 		wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-${OS_VERSION}.repo
@@ -71,7 +71,7 @@ function updateTime() {
 function updateUlimit() {
 	logTip $FUNCNAME
 	if [[ $INTERACTIVE == "Y" ]]; then
-		read -p "Do you wan update Ulimit to 65535?[Y/N]: " wantUpdateUlimit
+		read -p "Do you wan update Ulimit to 65535? [N/n for rejection]: " wantUpdateUlimit
 	fi
 	if [[ $wantUpdateUlimit == "N" || $wantUpdateUlimit == "n" ]]; then
 		return
@@ -137,7 +137,7 @@ net.ipv4.tcp_tw_reuse = 1
 net.ipv4.tcp_mem = 94500000 915000000 927000000
 net.ipv4.tcp_fin_timeout = 1
 EOF
-		read -p "Do you want to update the above core configuration?[Y/N]: " wantUpdateCoreConfig
+		read -p "Do you want to update the above core configuration? [N/n for rejection]: " wantUpdateCoreConfig
 	fi
 	if [[ $wantUpdateCoreConfig == "N" || $wantUpdateCoreConfig == "n" ]]; then
 		return

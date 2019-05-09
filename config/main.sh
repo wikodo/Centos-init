@@ -56,7 +56,7 @@ alias man=tldr
 # python
 alias pip=pip3.6
 EOF
-		read -p "Do you want to configure the above options for your oh-my-zsh?[Y/N]: " wantConfigZsh
+		read -p "Do you want to configure the above options for your oh-my-zsh? [N/n for rejection]: " wantConfigZsh
 	fi
 	if [[ $wantConfigZsh == "N" || $wantConfigZsh == "n" ]]; then
 		return

@@ -147,22 +147,22 @@ EOF
 }
 
 function main() {
-	read -p "Do you want to update ssh port? [Y/N]: " wantUpdateSSHPort
-	if [[ $wantUpdateSSHPort == "Y" || $wantUpdateSSHPort == "y" ]]; then
+	read -p "Do you want to update ssh port? [N/n for rejection]: " wantUpdateSSHPort
+	if [[ $wantUpdateSSHPort != "N" && $wantUpdateSSHPort != "n" ]]; then
 		updateSSHPort
 	fi
 
-	read -p "Do you want to use key login? [Y/N]: " wantUseKeyLogin
-	if [[ $wantUseKeyLogin == "Y" || $wantUseKeyLogin == "y" ]]; then
+	read -p "Do you want to use key login? [N/n for rejection]: " wantUseKeyLogin
+	if [[ $wantUseKeyLogin != "N" && $wantUseKeyLogin != "n" ]]; then
 		useKeyLogin
 	fi
 
-	read -p "Do you want to use iptable? [Y/N]: " wantUseIptable
-	if [[ $wantUseIptable == "Y" || $wantUseIptable == "y" ]]; then
+	read -p "Do you want to use iptable? [N/n for rejection]: " wantUseIptable
+	if [[ $wantUseIptable != "N" && $wantUseIptable != "n" ]]; then
 		useIptable
 	fi
-	read -p "Do you want to use soft to prevent cracking password? [Y/N]: " wantPreventCrackingPassword
-	if [[ $wantPreventCrackingPassword == "Y" || $wantPreventCrackingPassword == "y" ]]; then
+	read -p "Do you want to use soft to prevent cracking password? [N/n for rejection]: " wantPreventCrackingPassword
+	if [[ $wantPreventCrackingPassword != "N" && $wantPreventCrackingPassword != "n" ]]; then
 		preventCrackingPassword
 	fi
 }

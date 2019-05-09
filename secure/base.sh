@@ -3,7 +3,6 @@ function deleteOrLockUnnecessaryUsersAndGroups() {
 	logTip $FUNCNAME
 	if [[ $INTERACTIVE == "Y" ]]; then
 		cat <<EOF
-userdel games
 passwd -l dbus
 passwd -l nobody
 passwd -l ftp
@@ -15,12 +14,11 @@ passwd -l sync
 passwd -l adm
 passwd -l lp
 EOF
-		read -p "Do you want to carry out the above orders?[Y/N]: " wantDeleteUsersAndGroups
+		read -p "Do you want to carry out the above orders? [N/n for rejection]: " wantDeleteUsersAndGroups
 	fi
 	if [[ $wantDeleteUsersAndGroups == "N" || $wantDeleteUsersAndGroups == "n" ]]; then
 		return
 	fi
-	userdel games
 	passwd -l dbus
 	passwd -l nobody
 	passwd -l ftp
@@ -44,7 +42,7 @@ function setPrivileges() {
 	chattr +i /etc/gshadow
 	chmod -R 700 /etc/rc.d/init.d/*
 EOF
-		read -p "Do you want to carry out the above orders?[Y/N]: " wantSetPrivileges
+		read -p "Do you want to carry out the above orders? [N/n for rejection]: " wantSetPrivileges
 	fi
 	if [[ $wantSetPrivileges == "N" || $wantSetPrivileges == "n" ]]; then
 		return
@@ -67,7 +65,7 @@ X11Forwarding no
 ChrootDirectory /home/%u
 AllowTcpForwarding no
 EOF
-		read -p "Do you want to configure the above content om /etc/ssh/sshd_config?[Y/N]: " wantUpdateSSHConfig
+		read -p "Do you want to configure the above content om /etc/ssh/sshd_config? [N/n for rejection]: " wantUpdateSSHConfig
 	fi
 	if [[ $wantUpdateSSHConfig == "N" || $wantUpdateSSHConfig == "n" ]]; then
 		return
@@ -85,7 +83,7 @@ EOF
 function closeCtrlAltDel() {
 	logTip $FUNCNAME
 	if [[ $INTERACTIVE == "Y" ]]; then
-		read -p "Do you want to close CtrlAltDel?[Y/N]: " wantCloseCtrlAltDel
+		read -p "Do you want to close CtrlAltDel? [N/n for rejection]: " wantCloseCtrlAltDel
 	fi
 	if [[ $wantCloseCtrlAltDel == "N" || $wantCloseCtrlAltDel == "n" ]]; then
 		return
@@ -98,7 +96,7 @@ function closeCtrlAltDel() {
 function closeIpv6() {
 	logTip $FUNCNAME
 	if [[ $INTERACTIVE == "Y" ]]; then
-		read -p "Do you want to close Ipv6?[Y/N]: " wantCloseIpv6
+		read -p "Do you want to close Ipv6? [N/n for rejection]: " wantCloseIpv6
 	fi
 	if [[ $wantCloseIpv6 == "N" || $wantCloseIpv6 == "n" ]]; then
 		return
@@ -113,7 +111,7 @@ function closeIpv6() {
 function closeSELinux() {
 	logTip $FUNCNAME
 	if [[ $INTERACTIVE == "Y" ]]; then
-		read -p "Do you want to close SELinux?[Y/N]: " wantCloseSELinux
+		read -p "Do you want to close SELinux? [N/n for rejection]: " wantCloseSELinux
 	fi
 	if [[ $wantCloseSELinux == "N" || $wantCloseSELinux == "n" ]]; then
 		return

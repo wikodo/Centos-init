@@ -5,8 +5,8 @@ logSuccess OS_VERSION=$OS_VERSION
 ULIMIT=$(ulimit -n)
 logSuccess ULIMIT=$ULIMIT
 
-read -p "Do you want to use interactive mode?[Y/N]: " INTERACTIVE
+read -p "Do you want to use interactive mode? [N/n for rejection]: " INTERACTIVE
 
-if [[ $INTERACTIVE == "Y" || $INTERACTIVE == "y" ]]; then
+if [[ $INTERACTIVE != "N" && $INTERACTIVE != "n" ]]; then
 	INTERACTIVE="Y"
 fi

@@ -7,7 +7,7 @@ epel-release wget man bind-utils net-tools lrzsz gcc gcc-c++ make cmake libxml2-
 traceroute glibc-headers openssh-clients libtool openssl-devel openssl curl
 curl-devel unzip sudo ntp libaio-devel ncurses-devel autoconf automake zlib-devel python-devel
 EOF
-		read -p "Do you want to install the above commonly used software?[Y/N]: " wantInstallCommonSoft
+		read -p "Do you want to install the above commonly used software? [N/n for rejection]: " wantInstallCommonSoft
 	fi
 	if [[ $wantInstallCommonSoft == "N" || $wantInstallCommonSoft == "n" ]]; then
 		return
@@ -24,7 +24,7 @@ EOF
 function installGit() {
 	logTip $FUNCNAME
 	if [[ $INTERACTIVE == "Y" ]]; then
-		read -p "Do you want to install git?[Y/N]: " wantInstallGit
+		read -p "Do you want to install git? [N/n for rejection]: " wantInstallGit
 	fi
 	if [[ $wantInstallGit == "N" || $wantInstallGit == "n" ]]; then
 		return
@@ -56,8 +56,8 @@ function installGit() {
 function installVim() {
 	logTip $FUNCNAME
 	if [[ $INTERACTIVE == "Y" ]]; then
-		read -p "Do you want to install vim?[Y/N]: " wantInstallVim
-		read -p "Do you want to install SpaceVim?[Y/N]: " wantInstallSpaceVim
+		read -p "Do you want to install vim? [N/n for rejection]: " wantInstallVim
+		read -p "Do you want to install SpaceVim? [N/n for rejection]: " wantInstallSpaceVim
 	fi
 	if [[ $wantInstallVim == "N" || $wantInstallVim == "n" ]]; then
 		return
@@ -73,7 +73,7 @@ function installVim() {
 function installZsh() {
 	logTip $FUNCNAME
 	if [[ $INTERACTIVE == "Y" ]]; then
-		read -p "Do you want to install on-my-zsh?[Y/N]: " wantInstallZSH
+		read -p "Do you want to install on-my-zsh? [N/n for rejection]: " wantInstallZSH
 	fi
 	if [[ $wantInstallZSH == "N" || $wantInstallZSH == "n" ]]; then
 		return
@@ -86,7 +86,7 @@ function installZsh() {
 function installNode() {
 	logTip $FUNCNAME
 	if [[ $INTERACTIVE == "Y" ]]; then
-		read -p "Do you want to install nodejs?[Y/N]: " wantInstallNodejs
+		read -p "Do you want to install nodejs? [N/n for rejection]: " wantInstallNodejs
 	fi
 	if [[ $wantInstallNodejs == "N" || $wantInstallNodejs == "n" ]]; then
 		return
@@ -96,14 +96,14 @@ function installNode() {
 		nodeVersion="12.2.0"
 	fi
 	wget -P /usr/local/ https://nodejs.org/dist/v${nodeVersion}/node-v${nodeVersion}-linux-x64.tar.xz
-	xz -d node-v${nodeVersion}-linux-x64.tar.xz
-	tar xvf node-v${nodeVersion}-linux-x64.tar
+	xz -d /usr/local/node-v${nodeVersion}-linux-x64.tar.xz
+	tar xvf /usr/local/node-v${nodeVersion}-linux-x64.tar
 	ln -s /usr/local/node-v${nodeVersion}-linux-x64/bin/node /usr/local/bin/
 	ln -s /usr/local/node-v${nodeVersion}-linux-x64/bin/npm /usr/local/bin/
 	if [[ -z $inChina ]]; then
-		read -p "Is your server in China? [Y/N]: " inChina
+		read -p "Is your server in China? [N/n for in China]: " inChina
 	fi
-	if [[ $inChina == "Y" || $inChina == "y" ]]; then
+	if [[ $inChina == "N" || $inChina == "n" ]]; then
 		npm config set registry https://registry.npm.taobao.org
 		npm config set disturl https://npm.taobao.org/dist
 		npm config set puppeteer_download_host https://npm.taobao.org/mirrors
@@ -115,7 +115,7 @@ function installNpmPackages() {
 	logTip $FUNCNAME
 	if [[ $INTERACTIVE == "Y" ]]; then
 		logTip "tldr pm2 nodemon"
-		read -p "Do you want to install the above npm packages?[Y/N]: " wantInstallNpmPackages
+		read -p "Do you want to install the above npm packages? [N/n for rejection]: " wantInstallNpmPackages
 	fi
 	if [[ $wantInstallNpmPackages == "N" || $wantInstallNpmPackages == "n" ]]; then
 		return
@@ -128,7 +128,7 @@ function installNpmPackages() {
 function installPython() {
 	logTip $FUNCNAME
 	if [[ $INTERACTIVE == "Y" ]]; then
-		read -p "Do you want to install python3.6?[Y/N]: " wantInstallPython
+		read -p "Do you want to install python3.6? [N/n for rejection]: " wantInstallPython
 	fi
 	if [[ $wantInstallPython == "N" || $wantInstallPython == "n" ]]; then
 		return
@@ -148,7 +148,7 @@ function installPipPackages() {
 	logTip $FUNCNAME
 	if [[ $INTERACTIVE == "Y" ]]; then
 		logTip "thefuck"
-		read -p "Do you want to install the above pip packages?[Y/N]: " wantInstallPipPackages
+		read -p "Do you want to install the above pip packages? [N/n for rejection]: " wantInstallPipPackages
 	fi
 	if [[ $wantInstallPipPackages == "N" || $wantInstallPipPackages == "n" ]]; then
 		return
@@ -160,7 +160,7 @@ function installPipPackages() {
 function installDocker() {
 	logTip $FUNCNAME
 	if [[ $INTERACTIVE == "Y" ]]; then
-		read -p "Do you want to install Docker?[Y/N]: " wantInstallDocker
+		read -p "Do you want to install Docker? [N/n for rejection]: " wantInstallDocker
 	fi
 	if [[ $wantInstallDocker == "N" || $wantInstallDocker == "n" ]]; then
 		return
@@ -175,7 +175,7 @@ function installDocker() {
 function installNginx() {
 	logTip $FUNCNAME
 	if [[ $INTERACTIVE == "Y" ]]; then
-		read -p "Do you want to install Nginx?[Y/N]: " wantInstallNginx
+		read -p "Do you want to install Nginx? [N/n for rejection]: " wantInstallNginx
 	fi
 	if [[ $wantInstallNginx == "N" || $wantInstallNginx == "n" ]]; then
 		return
@@ -190,7 +190,7 @@ function installNginx() {
 function installCcat() {
 	logTip $FUNCNAME
 	if [[ $INTERACTIVE == "Y" ]]; then
-		read -p "Do you want to install CCat?[Y/N]: " wantInstallCCat
+		read -p "Do you want to install CCat? [N/n for rejection]: " wantInstallCCat
 	fi
 	if [[ $wantInstallCCat == "N" || $wantInstallCCat == "n" ]]; then
 		return
@@ -206,7 +206,7 @@ function installCcat() {
 function installShadowSocks() {
 	logTip $FUNCNAME
 	if [[ $INTERACTIVE == "Y" ]]; then
-		read -p "Do you want to install shadowsocks?[Y/N]: " wantInstallShadowSocks
+		read -p "Do you want to install shadowsocks? [N/n for rejection]: " wantInstallShadowSocks
 	fi
 	if [[ $wantInstallShadowSocks == "N" || $wantInstallShadowSocks == "n" ]]; then
 		return

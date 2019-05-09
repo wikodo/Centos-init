@@ -63,8 +63,8 @@ function banRootLogin() {
 }
 
 function main() {
-	read -p "Do you want to add a new user to replace the root user and prohibit the root user from logging in?[Y/N]: " wantAddNewUser
-	if [[ $wantAddNewUser == "Y" || $wantAddNewUser == "y" ]]; then
+	read -p "Do you want to add a new user to replace the root user and prohibit the root user from logging in? [N/n for rejection]: " wantAddNewUser
+	if [[ $wantAddNewUser != "n" && $wantAddNewUser != "N" ]]; then
 		getUserInfo
 		addUser
 		joinWheelGroup
