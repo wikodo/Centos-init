@@ -83,8 +83,13 @@ Script functions are divided into four categories:
 
 3. config
   ```sh
-  configVim
-  configZsh
+	configVim
+	configZsh
+	configGit
+	configNode
+	configDocker
+	configNginx
+	configShadowSocks
   ```
 
 4. secure

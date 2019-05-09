@@ -55,31 +55,6 @@ EOF
 	logSuccess "Privileges has set."
 }
 
-function updateSSHConfig() {
-	logTip $FUNCNAME
-	if [[ $INTERACTIVE == "Y" ]]; then
-		cat <<EOF
-UseDNS no
-GSSAPIAuthentication no
-X11Forwarding no
-ChrootDirectory /home/%u
-AllowTcpForwarding no
-EOF
-		read -p "Do you want to configure the above content om /etc/ssh/sshd_config? [N/n for rejection]: " wantUpdateSSHConfig
-	fi
-	if [[ $wantUpdateSSHConfig == "N" || $wantUpdateSSHConfig == "n" ]]; then
-		return
-	fi
-	sed -i 's/#UseDNS yes/UseDNS no/g' /etc/ssh/sshd_config
-	sed -i 's/GSSAPIAuthentication yes/GSSAPIAuthentication no/' /etc/ssh/sshd_config
-	sed -i 's/X11Forwarding yes/X11Forwarding no/' /etc/ssh/sshd_config
-	cat >>/etc/ssh/sshd_config <<EOF
-ChrootDirectory /home/%u
-AllowTcpForwarding no
-EOF
-	logSuccess "SSH has updated."
-}
-
 function closeCtrlAltDel() {
 	logTip $FUNCNAME
 	if [[ $INTERACTIVE == "Y" ]]; then
@@ -124,7 +99,6 @@ function closeSELinux() {
 function main() {
 	deleteOrLockUnnecessaryUsersAndGroups
 	setPrivileges
-	updateSSHConfig
 	closeCtrlAltDel
 	closeIpv6
 	closeSELinux

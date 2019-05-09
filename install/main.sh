@@ -30,26 +30,6 @@ function installGit() {
 		return
 	fi
 	yum -y install git
-	read -p "Please input your gitUserName,enter means skip: " gitUserName
-	read -p "Please input your gitUserEmail,enter means skip: " gitUserEmail
-	if [[ -z $gitUserName ]]; then
-		echo "skip gitUserName option."
-	else
-		git config --global user.name $gitUserName
-	fi
-	if [[ -z $gitUserEmail ]]; then
-		echo "skip gitUserEmail option."
-	else
-		git config --global user.email $gitUserEmail
-	fi
-	git config --global http.sslverify false
-	git config --global https.sslverify false
-
-	# ssh-keygen -t rsa -C "${gitUserEmail}"
-	# read -p "Please input your githubUserName: " githubUserName
-	# scp ~/.ssh/id_rsa.pub ${githubUserName}@github.com
-	# ssh -T git@github.com
-
 	logSuccess "Git has installed."
 }
 
@@ -100,21 +80,13 @@ function installNode() {
 	tar xvf /usr/local/node-v${nodeVersion}-linux-x64.tar
 	ln -s /usr/local/node-v${nodeVersion}-linux-x64/bin/node /usr/local/bin/
 	ln -s /usr/local/node-v${nodeVersion}-linux-x64/bin/npm /usr/local/bin/
-	if [[ -z $inChina ]]; then
-		read -p "Is your server in China? [N/n for in China]: " inChina
-	fi
-	if [[ $inChina == "N" || $inChina == "n" ]]; then
-		npm config set registry https://registry.npm.taobao.org
-		npm config set disturl https://npm.taobao.org/dist
-		npm config set puppeteer_download_host https://npm.taobao.org/mirrors
-	fi
 	logSuccess "Node has installed."
 }
 
 function installNpmPackages() {
 	logTip $FUNCNAME
 	if [[ $INTERACTIVE == "Y" ]]; then
-		logTip "tldr pm2 nodemon"
+		echo "tldr pm2 nodemon"
 		read -p "Do you want to install the above npm packages? [N/n for rejection]: " wantInstallNpmPackages
 	fi
 	if [[ $wantInstallNpmPackages == "N" || $wantInstallNpmPackages == "n" ]]; then

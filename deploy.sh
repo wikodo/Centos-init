@@ -16,7 +16,7 @@ function generatorNewVersion() {
 }
 function updateNewVersion() {
 	echo $FUNCNAME
-	sed -i "4s/.*/	version=$newVersion/g" ./install.sh
+	sed -i "3s/.*/	version=$newVersion/g" ./install.sh
 }
 
 function deploy() {

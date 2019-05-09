@@ -32,6 +32,11 @@ function useKeyLogin() {
 	echo $publicKey >~/.ssh/authorized_keys
 	chmod 600 ~/.ssh/authorized_keys
 
+	read -p "Do you want to prohibit password login? [N/n for rejection]: " wantProhibitPassordLogin
+	if [[ $wantProhibitPassordLogin == "N" || $wantProhibitPassordLogin == "n" ]]; then
+		logSuccess "KeyLogin has set."
+		return
+	fi
 	sed -i s/"PasswordAuthentication yes"/"PasswordAuthentication no"/g /etc/ssh/sshd_config
 	sed -i s/"PermitEmptyPasswords yes"/"PermitEmptyPasswords no"/g /etc/ssh/sshd_config
 	sed -i s/"UsePAM yes"/"UsePAM no"/g /etc/ssh/sshd_config
@@ -40,7 +45,6 @@ RSAAuthentication yes
 PubkeyAuthentication yes
 AuthorizedKeysFile ~/.ssh/authorized_keys
 EOF
-	service sshd restart
 	logSuccess "KeyLogin has set."
 }
 
