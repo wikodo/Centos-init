@@ -119,7 +119,7 @@ function installPython() {
 function installPipPackages() {
 	logTip $FUNCNAME
 	if [[ $INTERACTIVE == "Y" ]]; then
-		logTip "thefuck"
+		echo "thefuck"
 		read -p "Do you want to install the above pip packages? [N/n for rejection]: " wantInstallPipPackages
 	fi
 	if [[ $wantInstallPipPackages == "N" || $wantInstallPipPackages == "n" ]]; then

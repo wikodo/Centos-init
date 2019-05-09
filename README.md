@@ -1,6 +1,5 @@
 # CentosInit.sh
 
-------
 
 [![支付宝捐助按钮](https://camo.githubusercontent.com/f4874996db5ac421925db08778d800d76d36abbc/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f2545362539342541462545342542422539382545352541452539442d25453525393025393154412545362538442539302545352538412541392d677265656e2e737667)](https://cdn.jsdelivr.net/gh/Tomotoes/images/blog/alipay.png)
 
@@ -8,7 +7,7 @@
 
 [中文版说明](<https://github.com/Tomotoes/Centos-init/blob/master/README.zh_CN.md>)
 
-> A script used to initialize centos.
+> A highly customized, intelligent Centos initialization script.
 >
 
 Sounds boring.
@@ -45,13 +44,16 @@ sh -c "$(wget https://tomotoes.com/Centos-init/install.sh -O -)"
 
 ## Screenshots
 
-Waiting for supplement.
+![screenshot](https://github.com/Tomotoes/Centos-init/blob/master/screenshot.gif)
 
 
 
 ## Usage
 
+### Basic introduction
+
 Script functions are divided into four categories:
+
 1. Update
 	```sh
 	updateLanguage
@@ -102,18 +104,18 @@ Script functions are divided into four categories:
      closeIpv6
      closeSELinux
      ```
-     
+
 - expert
-   
+
   ```sh
      updateSSHPort
      useKeyLogin
      useIptable
      preventCrackingPassword
      ```
-   
+
 - user
-   
+
   ```sh
      getUserInfo
      addUser
@@ -122,6 +124,8 @@ Script functions are divided into four categories:
      ```
 
 
+
+### Install separate function
 
 If you want to install a single service`( Update | Install | Config | Secure )`
 
@@ -137,6 +141,8 @@ ONLY_INSTALL=Y ONLY_CONFIG=Y sh -c "$(curl -fsSL https://tomotoes.com/Centos-ini
 
 
 
+### Interactive mode
+
 You can also set the installation to interactive mode, in which you will be asked if you want to proceed with the next installation and configuration steps.
 
 Please refer to the following example:
@@ -144,14 +150,6 @@ Please refer to the following example:
 ```sh
 INTERACTIVE=Y sh -c "$(curl -fsSL https://tomotoes.com/Centos-init/install.sh)"
 ```
-
-
-
-## FAQ
-
-Can I use this script to be a little handsome?
-
-Of course!
 
 
 
