@@ -77,7 +77,7 @@ function installNode() {
 	fi
 	wget -P /usr/local/ https://nodejs.org/dist/v${nodeVersion}/node-v${nodeVersion}-linux-x64.tar.xz
 	xz -d /usr/local/node-v${nodeVersion}-linux-x64.tar.xz
-	tar xvf /usr/local/node-v${nodeVersion}-linux-x64.tar
+	tar xvf /usr/local/node-v${nodeVersion}-linux-x64.tar -C /usr/local
 	ln -s /usr/local/node-v${nodeVersion}-linux-x64/bin/node /usr/local/bin/
 	ln -s /usr/local/node-v${nodeVersion}-linux-x64/bin/npm /usr/local/bin/
 	logSuccess "Node has installed."

@@ -1,13 +1,4 @@
 #!/bin/bash
-function sayTip() {
-	logTip 'theFuck'
-	logTip 'alias'
-	logTip 'change default terminal to zsh'
-	logTip 'tldr->man'
-	logTip 'ccat->cat'
-	logTip 'shadowsocks config'
-}
-
 function removeDownloadDirectory(){
 	rm -rf $SCRIPT_PATH
 }
@@ -29,7 +20,6 @@ function sayEnd() {
 }
 
 function main() {
-	sayTip
 	removeDownloadDirectory
 	sayEnd
 	exit 0
