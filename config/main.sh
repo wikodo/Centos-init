@@ -126,6 +126,9 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 # Enable autosuggestions automatically.
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=10"
+
+bindkey ',' autosuggest-accept
+
 EOF
 	logSuccess "Zsh has config."
 }

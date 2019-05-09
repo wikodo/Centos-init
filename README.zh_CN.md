@@ -6,53 +6,50 @@
 
 [![微信捐助按钮](https://camo.githubusercontent.com/26101aa838286ad0d45a6f71b25fdc6e14e7668c/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f2545352542452541452545342542462541312d25453525393025393154412545362538442539302545352538412541392d677265656e2e737667)](https://cdn.jsdelivr.net/gh/Tomotoes/images/blog/wechat.png)
 
-[中文版说明](<https://github.com/Tomotoes/Centos-init/blob/master/README.zh_CN.md>)
+[English Version](<https://github.com/Tomotoes/Centos-init/blob/master/README.md>)
 
-> A script used to initialize centos.
+> 一个用来初始化 Centos 的脚本。
 >
 
-Sounds boring.
-
-Let's try again.
-
-**The script will not make you a 10x developer...but you might feel like one.**
+听起来有些无聊，让我们开始吧。
 
 
 
-## Prerequisites
-- Centos7 System
+## 必备条件
+- Centos7 系统
 
-- 64bit Operating System.
+- 64 位操作系统
 
-- `curl` or `wget` should be installed
+- `curl` 或 `wget` 可以使用
 
 
 
-## Install
-The CentosInit Script is installed by running one of the following commands in your terminal. You can install this via the command-line with either `curl` or `wget`.
+## 安装
+此脚本可以用以下两种方式安装：
 
-**via curl**
+**通过 curl**
+
 ```sh
 sh -c "$(curl -fsSL https://tomotoes.com/Centos-init/install.sh)"
 ```
 
-**via wget**
+**通过 wget**
 ```sh
 sh -c "$(wget https://tomotoes.com/Centos-init/install.sh -O -)"
 ```
 
 
 
-## Screenshots
+## 截图
 
-Waiting for supplement.
+有待补充。
 
 
 
-## Usage
+## 用法
 
-Script functions are divided into four categories:
-1. Update
+脚本功能一共分为四大类:
+1. 初始化配置（update）
 	```sh
 	updateLanguage
   updateTime
@@ -65,7 +62,7 @@ Script functions are divided into four categories:
 	updateCoreConfig
 	```
 
-2. install
+2. 安装常用软件（install）
    ```sh
    installCommonSoft
    installGit
@@ -81,7 +78,7 @@ Script functions are divided into four categories:
    installShadowSocks
    ```
 
-3. config
+3. 配置安装后的软件（config）
   ```sh
 	configVim
 	configZsh
@@ -92,8 +89,8 @@ Script functions are divided into four categories:
 	configShadowSocks
   ```
 
-4. secure
-   - base
+4. 必要的安全配置（secure）
+   - 基础项
 
      ```sh
      deleteOrLockUnnecessaryUsersAndGroups
@@ -103,7 +100,7 @@ Script functions are divided into four categories:
      closeSELinux
      ```
      
-- expert
+- 高阶项
    
   ```sh
      updateSSHPort
@@ -112,7 +109,7 @@ Script functions are divided into four categories:
      preventCrackingPassword
      ```
    
-- user
+- 用户相关项
    
   ```sh
      getUserInfo
@@ -123,12 +120,12 @@ Script functions are divided into four categories:
 
 
 
-If you want to install a single service`( Update | Install | Config | Secure )`
+如果你想安装某一种功能`( Update | Install | Config | Secure )`
 
-Please refer to the following example:
+请参考以下案列:
 
 ```sh
-# Update only
+# 在安装命令前设置 ONLY_UPDATE=Y 即可只安装 update 服务
 ONLY_UPDATE=Y sh -c "$(curl -fsSL https://tomotoes.com/Centos-init/install.sh)"
 
 # Install and Config
@@ -137,23 +134,26 @@ ONLY_INSTALL=Y ONLY_CONFIG=Y sh -c "$(curl -fsSL https://tomotoes.com/Centos-ini
 
 
 
-You can also set the installation to interactive mode, in which you will be asked if you want to proceed with the next installation and configuration steps.
+你也设置设置交互模式，在交互模式下，可高达自定义化你想使用的功能。
 
-Please refer to the following example:
+每执行完一项功能，都会询问你下一步。
+
+
+
+使用功能的方法如下:
 
 ```sh
+# 在安装命令前设置 INTERACTIVE=Y
 INTERACTIVE=Y sh -c "$(curl -fsSL https://tomotoes.com/Centos-init/install.sh)"
 ```
 
 
 
-## FAQ
+## 问答
 
-Can I use this script to be a little handsome?
-
-Of course!
+有待补充。
 
 
 
-## License
-The Script is released under the MIT license.
+## 协议
+此项目基于 `MIT` 协议。
