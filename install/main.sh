@@ -185,8 +185,14 @@ function installShadowSocks() {
 	fi
 	wget --no-check-certificate -O shadowsocks.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh && chmod +x shadowsocks.sh && ./shadowsocks.sh 2>&1 | tee shadowsocks.log
 	/etc/init.d/shadowsocks restart
-	wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh && chmod +x bbr.sh && ./bbr.sh
+
 	logSuccess "shadowsocks has installed."
+}
+
+function installBBR(){
+	logTip $FUNCNAME
+	wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh && chmod +x bbr.sh && ./bbr.sh
+	logSuccess "bbr has installed."
 }
 
 function main() {
@@ -205,6 +211,7 @@ function main() {
 	installNginx
 	installCcat
 	installShadowSocks
+	installBBR
 	cat <<EOF
 +-------------------------------------------------+
 |               install is done                   |

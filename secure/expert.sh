@@ -37,6 +37,12 @@ function useKeyLogin() {
 		logSuccess "KeyLogin has set."
 		return
 	fi
+
+	logSuccess "KeyLogin has set."
+}
+
+function banPasswordLogin(){
+	logTip $FUNCNAME
 	sed -i s/"PasswordAuthentication yes"/"PasswordAuthentication no"/g /etc/ssh/sshd_config
 	sed -i s/"PermitEmptyPasswords yes"/"PermitEmptyPasswords no"/g /etc/ssh/sshd_config
 	sed -i s/"UsePAM yes"/"UsePAM no"/g /etc/ssh/sshd_config
@@ -45,7 +51,7 @@ RSAAuthentication yes
 PubkeyAuthentication yes
 AuthorizedKeysFile ~/.ssh/authorized_keys
 EOF
-	logSuccess "KeyLogin has set."
+	logSuccess "PasswordLogin has banned."
 }
 
 function useIptable() {
@@ -161,13 +167,19 @@ function main() {
 		useKeyLogin
 	fi
 
-	read -p "Do you want to use iptable? [N/n for rejection]: " wantUseIptable
-	if [[ $wantUseIptable != "N" && $wantUseIptable != "n" ]]; then
-		useIptable
+		read -p "Do you want to ban password login? [N/n for rejection]: " wantBanPassword
+	if [[ $wantBanPassword != "N" && $wantBanPassword != "n" ]]; then
+		banPasswordLogin
 	fi
+
 	read -p "Do you want to use soft to prevent cracking password? [N/n for rejection]: " wantPreventCrackingPassword
 	if [[ $wantPreventCrackingPassword != "N" && $wantPreventCrackingPassword != "n" ]]; then
 		preventCrackingPassword
+	fi
+
+	read -p "Do you want to use iptable? [N/n for rejection]: " wantUseIptable
+	if [[ $wantUseIptable != "N" && $wantUseIptable != "n" ]]; then
+		useIptable
 	fi
 }
 
