@@ -29,7 +29,7 @@ function useKeyLogin() {
 	[ ! -d ~/.ssh ] && mkdir -p ~/.ssh/
 	chmod 700 ~/.ssh/
 	read -p "Please paste your public key: " publicKey
-	echo $publicKey >~/.ssh/authorized_keys
+	echo $publicKey >> ~/.ssh/authorized_keys
 	chmod 600 ~/.ssh/authorized_keys
 
 	read -p "Do you want to prohibit password login? [N/n for rejection]: " wantProhibitPassordLogin
